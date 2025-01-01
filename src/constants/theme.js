@@ -18,6 +18,7 @@ export const SIZES = {
     small: 8,
     medium: 15,
     large: 20,
+    xLarge: 30,
   },
   radius: {
     small: 10,
@@ -28,6 +29,7 @@ export const SIZES = {
     small: 12,
     medium: 14,
     large: 16,
+    xLarge: 20,
     title: 20,
     header: 24,
   },

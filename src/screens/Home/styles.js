@@ -31,9 +31,8 @@ export const styles = StyleSheet.create({
     padding: 8,
   },
   characterSection: {
-    flex: 1,
-    minHeight: 300,
-    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
   },
   characterImage: {
     width: 120,

@@ -8,12 +8,15 @@ import {
   StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import exercise1 from "../../../assets/imgs/exercise1.png";
 import { styles } from "./styles";
 import { COLORS } from "../../constants/theme";
 import AnimatedCharacter from "../../components/AnimatedCharacter/AnimatedCharacter";
 
 const Home = () => {
+  const navigation = useNavigation();
+
   const exercises = [
     {
       id: 1,
@@ -21,7 +24,9 @@ const Home = () => {
       duration: "2 Phút",
       points: "200 Lazy Points",
       image: exercise1,
-      isNew: true,
+      isFavorite: true,
+      description:
+        "Bài tập giúp thư giãn vai và cổ, giảm căng thẳng. Thực hiện đều đặn mỗi ngày sẽ giúp giảm đau mỏi vai gáy, tăng cường tuần hoàn máu và giảm stress hiệu quả. Bài tập này đặc biệt phù hợp cho người làm việc văn phòng, thường xuyên ngồi một chỗ trong thời gian dài.",
     },
     {
       id: 2,
@@ -29,6 +34,8 @@ const Home = () => {
       duration: "1 Phút",
       points: "100 Lazy Points",
       image: exercise1,
+      isFavorite: true,
+      description: "Bài tập giúp thư giãn vai và cổ, giảm căng thẳng",
     },
     {
       id: 3,
@@ -36,6 +43,8 @@ const Home = () => {
       duration: "2 Phút",
       points: "300 Lazy Points",
       image: exercise1,
+      isFavorite: true,
+      description: "Bài tập giúp thư giãn vai và cổ, giảm căng thẳng",
     },
     {
       id: 4,
@@ -43,8 +52,30 @@ const Home = () => {
       duration: "2 Phút",
       points: "300 Lazy Points",
       image: exercise1,
+      isFavorite: true,
+      description: "Bài tập giúp thư giãn vai và cổ, giảm căng thẳng",
     },
   ];
+
+  const handleExercisePress = (exercise) => {
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: "PracticeStack",
+        params: {
+          screen: "PracticeDetail",
+          params: {
+            exerciseId: exercise.id,
+            title: exercise.title,
+            duration: exercise.duration,
+            points: exercise.points,
+            image: exercise.image,
+            description: exercise.description,
+            previousScreen: "Home",
+          },
+        },
+      })
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -72,7 +103,11 @@ const Home = () => {
 
       <ScrollView style={styles.exerciseList}>
         {exercises.map((exercise) => (
-          <TouchableOpacity key={exercise.id} style={styles.exerciseCard}>
+          <TouchableOpacity
+            key={exercise.id}
+            style={styles.exerciseCard}
+            onPress={() => handleExercisePress(exercise)}
+          >
             <Image source={exercise.image} style={styles.exerciseImage} />
             <View style={styles.exerciseInfo}>
               <Text style={styles.exerciseTitle}>{exercise.title}</Text>

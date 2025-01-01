@@ -8,13 +8,57 @@ import { Ionicons } from "@expo/vector-icons";
 import Home from "./screens/Home/Home";
 import SystemNavigationBar from "react-native-system-navigation-bar";
 import { COLORS, SIZES } from "./constants/theme";
+import PracticeDetail from "./screens/Practice/PracticeDetail";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { TransitionPresets } from "@react-navigation/stack";
+import LazyReminder from "./components/LazyReminder/LazyReminder";
+import { useNavigation } from "@react-navigation/native";
 // Stacks cho từng tab
 const HomeStack = createNativeStackNavigator();
 const PracticeStack = createNativeStackNavigator();
 const SettingsStack = createNativeStackNavigator();
 // Stack Navigator cho Home
 const HomeStackScreen = () => (
-  <HomeStack.Navigator>
+  <HomeStack.Navigator
+    screenOptions={{
+      headerShown: false,
+      ...TransitionPresets.SlideFromRightIOS,
+      gestureEnabled: true,
+      gestureDirection: "horizontal",
+      transitionSpec: {
+        open: {
+          animation: "timing",
+          config: {
+            duration: 300,
+          },
+        },
+        close: {
+          animation: "timing",
+          config: {
+            duration: 300,
+          },
+        },
+      },
+      cardStyleInterpolator: ({ current, layouts }) => ({
+        cardStyle: {
+          transform: [
+            {
+              translateX: current.progress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [layouts.screen.width, 0],
+              }),
+            },
+          ],
+        },
+        overlayStyle: {
+          opacity: current.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 0.5],
+          }),
+        },
+      }),
+    }}
+  >
     <HomeStack.Screen
       name="HomeMain"
       component={Home}
@@ -26,13 +70,7 @@ const HomeStackScreen = () => (
 // Màn hình cho Profile Stack
 const PracticeScreen = () => (
   <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-    <Text>Hồ sơ</Text>
-  </View>
-);
-
-const PracticeDetailScreen = () => (
-  <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-    <Text>Chi tiết hồ sơ</Text>
+    <Text>Bài tập</Text>
   </View>
 );
 
@@ -42,12 +80,12 @@ const PracticeStackScreen = () => (
     <PracticeStack.Screen
       name="PracticeMain"
       component={PracticeScreen}
-      options={{ title: "Hồ sơ", headerShown: false }}
+      options={{ headerShown: false }}
     />
     <PracticeStack.Screen
       name="PracticeDetail"
-      component={PracticeDetailScreen}
-      options={{ title: "Chi tiết hồ sơ", headerShown: false }}
+      component={PracticeDetail}
+      options={{ headerShown: false }}
     />
   </PracticeStack.Navigator>
 );
@@ -87,69 +125,104 @@ const App = () => {
   }, []);
 
   return (
-    <>
+    <SafeAreaProvider>
       <StatusBar
         hidden={true}
         translucent={true}
         backgroundColor="transparent"
       />
       <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            headerShown: false,
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
+        <View style={{ flex: 1 }}>
+          <Tab.Navigator
+            screenOptions={({ route }) => ({
+              headerShown: false,
+              tabBarIcon: ({ focused, color, size }) => {
+                let iconName;
 
-              if (route.name === "HomeStack") {
-                iconName = "home";
-              } else if (route.name === "PracticeStack") {
-                iconName = "list";
-              } else if (route.name === "SettingsStack") {
-                iconName = "settings";
-              }
+                if (route.name === "HomeStack") {
+                  iconName = "home";
+                } else if (route.name === "PracticeStack") {
+                  iconName = "list";
+                } else if (route.name === "SettingsStack") {
+                  iconName = "settings";
+                }
 
-              return <Ionicons name={iconName} size={size} color={color} />;
-            },
-            tabBarActiveTintColor: COLORS.icon.active,
-            tabBarInactiveTintColor: COLORS.icon.inactive,
-            tabBarStyle: {
-              height: 60,
-              paddingBottom: 8,
-              paddingTop: 8,
-              backgroundColor: COLORS.primary,
-            },
-            tabBarLabelStyle: {
-              fontSize: SIZES.text.small,
-            },
-          })}
-        >
-          <Tab.Screen
-            name="HomeStack"
-            component={HomeStackScreen}
-            options={{
-              tabBarLabel: "Trang chủ",
-              headerShown: false,
-            }}
-          />
-          <Tab.Screen
-            name="PracticeStack"
-            component={PracticeStackScreen}
-            options={{
-              tabBarLabel: "Bài tập",
-              headerShown: false,
-            }}
-          />
-          <Tab.Screen
-            name="SettingsStack"
-            component={SettingsStackScreen}
-            options={{
-              tabBarLabel: "Cài đặt",
-              headerShown: false,
-            }}
-          />
-        </Tab.Navigator>
+                return <Ionicons name={iconName} size={size} color={color} />;
+              },
+              tabBarActiveTintColor: COLORS.icon.active,
+              tabBarInactiveTintColor: COLORS.icon.inactive,
+              tabBarStyle: {
+                height: 60,
+                paddingBottom: 8,
+                paddingTop: 8,
+                backgroundColor: COLORS.primary,
+              },
+              tabBarLabelStyle: {
+                fontSize: SIZES.text.small,
+              },
+            })}
+          >
+            <Tab.Screen
+              name="HomeStack"
+              component={HomeStackScreen}
+              options={{
+                tabBarLabel: "Trang chủ",
+                headerShown: false,
+              }}
+              listeners={({ navigation }) => ({
+                tabPress: () => {
+                  navigation.navigate("HomeStack", {
+                    screen: "HomeMain",
+                  });
+                },
+              })}
+            />
+            <Tab.Screen
+              name="PracticeStack"
+              component={PracticeStackScreen}
+              options={{
+                tabBarLabel: "Bài tập",
+                headerShown: false,
+              }}
+              listeners={({ navigation }) => ({
+                tabPress: (e) => {
+                  // Prevent default action
+                  e.preventDefault();
+                  // Reset the stack to initial route
+                  navigation.reset({
+                    index: 0,
+                    routes: [
+                      {
+                        name: "PracticeStack",
+                        state: {
+                          routes: [{ name: "PracticeMain" }],
+                        },
+                      },
+                    ],
+                  });
+                },
+              })}
+            />
+            <Tab.Screen
+              name="SettingsStack"
+              component={SettingsStackScreen}
+              options={{
+                tabBarLabel: "Cài đặt",
+                headerShown: false,
+              }}
+              listeners={({ navigation }) => ({
+                tabPress: () => {
+                  navigation.navigate("SettingsStack", {
+                    screen: "SettingsMain",
+                  });
+                },
+              })}
+            />
+          </Tab.Navigator>
+          <LazyReminder />
+        </View>
       </NavigationContainer>
-    </>
+    </SafeAreaProvider>
   );
 };
 
