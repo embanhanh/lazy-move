@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View, Text, StatusBar } from "react-native";
+import { View, Text, StatusBar, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Home from "./screens/Home/Home";
 import SystemNavigationBar from "react-native-system-navigation-bar";
@@ -75,14 +75,24 @@ const Tab = createBottomTabNavigator();
 
 const App = () => {
   useEffect(() => {
-    StatusBar.setHidden(true);
-    SystemNavigationBar.navigationHide();
-    SystemNavigationBar.immersive();
+    const setupNavigation = async () => {
+      if (Platform.OS === "android") {
+        await SystemNavigationBar.navigationHide();
+        await SystemNavigationBar.stickyImmersive();
+        StatusBar.setHidden(true);
+      }
+    };
+
+    setupNavigation();
   }, []);
 
   return (
     <>
-      <StatusBar hidden={true} />
+      <StatusBar
+        hidden={true}
+        translucent={true}
+        backgroundColor="transparent"
+      />
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({

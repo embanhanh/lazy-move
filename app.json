@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Lazy-Move",
-    "slug": "Lazy-Move",
+    "name": "Lazy Move",
+    "slug": "lazy-move",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,30 +13,41 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "bundleIdentifier": "com.embanhanh.lazymove",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.embanhanh.lazymove",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "softwareKeyboardLayoutMode": "pan",
       "navigationBar": {
-        "visible": "immersive",
+        "visible": "immersive-sticky",
         "backgroundColor": "#000000",
         "barStyle": "light-content"
-      }
+      },
+      "permissions": ["SYSTEM_ALERT_WINDOW", "WRITE_SETTINGS"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "androidStatusBar": {
-      "hidden": true
+      "hidden": true,
+      "translucent": true,
+      "barStyle": "light-content",
+      "backgroundColor": "#00000000"
     },
     "androidNavigationBar": {
-      "visible": "immersive",
-      "backgroundColor": "#000000",
+      "visible": "immersive-sticky",
+      "backgroundColor": "#00000000",
       "barStyle": "light-content"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e3de120d-aa55-4fd9-88e3-e9231301feff"
+      }
     }
   }
 }
