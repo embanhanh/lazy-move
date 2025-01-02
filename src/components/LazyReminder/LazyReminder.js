@@ -11,6 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { COLORS, SIZES } from "../../constants/theme";
 import exercise1 from "../../../assets/imgs/exercise1.png";
 import { useNavigation } from "@react-navigation/native";
+import CircleProgress from "../CircleProgress/CircleProgress";
 
 const { width } = Dimensions.get("window");
 
@@ -62,20 +63,20 @@ const LazyReminder = () => {
 
   useEffect(() => {
     // Hiển thị reminder lần đầu sau 5s
-    const initialTimer = setTimeout(() => {
-      showReminder();
-    }, 5000);
+    // const initialTimer = setTimeout(() => {
+    showReminder();
+    // }, 5000);
 
     // Sau đó cứ mỗi 5s sẽ hiện lại
-    const intervalTimer = setInterval(() => {
-      showReminder();
-    }, 5000);
+    // const intervalTimer = setInterval(() => {
+    //   showReminder();
+    // }, 5000);
 
-    // Cleanup timers
-    return () => {
-      clearTimeout(initialTimer);
-      clearInterval(intervalTimer);
-    };
+    // // Cleanup timers
+    // return () => {
+    //   clearTimeout(initialTimer);
+    //   clearInterval(intervalTimer);
+    // };
   }, []);
 
   const showReminder = () => {
@@ -95,13 +96,11 @@ const LazyReminder = () => {
     setVisible(true);
 
     Animated.sequence([
-      // Hiện overlay trước
       Animated.timing(scaleAnim, {
         toValue: 0.3,
         duration: 150,
         useNativeDriver: true,
       }),
-      // Sau đó scale reminder
       Animated.spring(scaleAnim, {
         toValue: 1,
         friction: 8,
@@ -144,6 +143,7 @@ const LazyReminder = () => {
   return (
     <Animated.View style={[styles.overlay]}>
       <Animated.View style={[styles.container]}>
+        {/* <CircleProgress seconds={3} onComplete={hideReminder} /> */}
         <View style={styles.content}>
           <View style={styles.header}>
             <View style={styles.iconContainer}>
@@ -211,6 +211,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.card,
     borderRadius: SIZES.radius.medium,
     padding: SIZES.padding.large,
+    position: "relative",
     elevation: 1001,
     zIndex: 1001,
     shadowColor: "#000",

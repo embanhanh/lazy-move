@@ -13,10 +13,12 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { TransitionPresets } from "@react-navigation/stack";
 import LazyReminder from "./components/LazyReminder/LazyReminder";
 import { useNavigation } from "@react-navigation/native";
+import HistoryScreen from "./screens/History/History";
 // Stacks cho từng tab
 const HomeStack = createNativeStackNavigator();
 const PracticeStack = createNativeStackNavigator();
 const SettingsStack = createNativeStackNavigator();
+const HistoryStack = createNativeStackNavigator();
 // Stack Navigator cho Home
 const HomeStackScreen = () => (
   <HomeStack.Navigator
@@ -108,6 +110,16 @@ const SettingsStackScreen = () => (
   </SettingsStack.Navigator>
 );
 
+const HistoryStackScreen = () => (
+  <HistoryStack.Navigator>
+    <HistoryStack.Screen
+      name="HistoryMain"
+      component={HistoryScreen}
+      options={{ title: "Lịch sử", headerShown: false }}
+    />
+  </HistoryStack.Navigator>
+);
+
 // Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
 
@@ -145,6 +157,8 @@ const App = () => {
                   iconName = "list";
                 } else if (route.name === "SettingsStack") {
                   iconName = "settings";
+                } else if (route.name === "HistoryStack") {
+                  iconName = "journal";
                 }
 
                 return <Ionicons name={iconName} size={size} color={color} />;
@@ -218,8 +232,23 @@ const App = () => {
                 },
               })}
             />
+            <Tab.Screen
+              name="HistoryStack"
+              component={HistoryStackScreen}
+              options={{
+                tabBarLabel: "Nhật ký",
+                headerShown: false,
+              }}
+              listeners={({ navigation }) => ({
+                tabPress: () => {
+                  navigation.navigate("HistoryStack", {
+                    screen: "HistoryMain",
+                  });
+                },
+              })}
+            />
           </Tab.Navigator>
-          <LazyReminder />
+          {/* <LazyReminder /> */}
         </View>
       </NavigationContainer>
     </SafeAreaProvider>

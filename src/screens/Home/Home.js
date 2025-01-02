@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -13,9 +13,11 @@ import exercise1 from "../../../assets/imgs/exercise1.png";
 import { styles } from "./styles";
 import { COLORS } from "../../constants/theme";
 import AnimatedCharacter from "../../components/AnimatedCharacter/AnimatedCharacter";
+import LazyReminder from "../../components/LazyReminder/LazyReminder";
 
 const Home = () => {
   const navigation = useNavigation();
+  const [showReminder, setShowReminder] = useState(false);
 
   const exercises = [
     {
@@ -79,6 +81,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
+      {showReminder && <LazyReminder />}
       {/* Header Section */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
@@ -87,7 +90,10 @@ const Home = () => {
             Bắt đầu nhẹ nhàng để không mệt!
           </Text>
         </View>
-        <TouchableOpacity style={styles.notificationButton}>
+        <TouchableOpacity
+          style={styles.notificationButton}
+          onPress={() => setShowReminder((prev) => !prev)}
+        >
           <Ionicons name="notifications" size={24} color="#b3a0ff" />
         </TouchableOpacity>
       </View>
