@@ -14,11 +14,14 @@ import { TransitionPresets } from "@react-navigation/stack";
 import LazyReminder from "./components/LazyReminder/LazyReminder";
 import { useNavigation } from "@react-navigation/native";
 import HistoryScreen from "./screens/History/History";
+import Social from "./screens/Social/Social";
+import ChallengeDetail from "./screens/Social/ChallengeDetail";
 // Stacks cho từng tab
 const HomeStack = createNativeStackNavigator();
 const PracticeStack = createNativeStackNavigator();
 const SettingsStack = createNativeStackNavigator();
 const HistoryStack = createNativeStackNavigator();
+const SocialStack = createNativeStackNavigator();
 // Stack Navigator cho Home
 const HomeStackScreen = () => (
   <HomeStack.Navigator
@@ -120,6 +123,15 @@ const HistoryStackScreen = () => (
   </HistoryStack.Navigator>
 );
 
+const SocialStackScreen = () => {
+  return (
+    <SocialStack.Navigator screenOptions={{ headerShown: false }}>
+      <SocialStack.Screen name="SocialMain" component={Social} />
+      <SocialStack.Screen name="ChallengeDetail" component={ChallengeDetail} />
+    </SocialStack.Navigator>
+  );
+};
+
 // Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
 
@@ -159,6 +171,8 @@ const App = () => {
                   iconName = "settings";
                 } else if (route.name === "HistoryStack") {
                   iconName = "journal";
+                } else if (route.name === "SocialStack") {
+                  iconName = "people";
                 }
 
                 return <Ionicons name={iconName} size={size} color={color} />;
@@ -246,6 +260,21 @@ const App = () => {
                   });
                 },
               })}
+            />
+            <Tab.Screen
+              name="SocialStack"
+              component={SocialStackScreen}
+              options={{
+                tabBarLabel: "Cộng đồng",
+                headerShown: false,
+                tabBarIcon: ({ focused, color, size }) => (
+                  <Ionicons
+                    name={focused ? "people" : "people-outline"}
+                    size={size}
+                    color={color}
+                  />
+                ),
+              }}
             />
           </Tab.Navigator>
           {/* <LazyReminder /> */}
