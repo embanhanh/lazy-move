@@ -12,7 +12,6 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: SIZES.padding.large,
-    marginBottom: SIZES.padding.large,
   },
   headerLeft: {
     flex: 1,
@@ -30,24 +29,12 @@ export const styles = StyleSheet.create({
   notificationButton: {
     padding: 8,
   },
-  characterSection: {
-    alignItems: "center",
-    marginBottom: 20,
+  characterContainer: {
+    flex: 1,
+    justifyContent: "center",
   },
-  characterImage: {
-    width: 120,
-    height: 120,
-    marginBottom: 10,
-  },
-  chatBubble: {
-    backgroundColor: "#b3a0ff",
-    padding: 10,
-    borderRadius: 15,
-    maxWidth: "80%",
-  },
-  chatText: {
-    color: "#fff",
-    fontSize: 16,
+  exerciseListContainer: {
+    flex: 1.618,
   },
   sectionTitle: {
     fontSize: 20,

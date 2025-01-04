@@ -99,43 +99,47 @@ const Home = () => {
       </View>
 
       {/* Character Section */}
-      <AnimatedCharacter />
+      <View style={styles.characterContainer}>
+        <AnimatedCharacter />
+      </View>
 
       {/* Exercise List Section */}
-      <Text style={styles.sectionTitle}>Hành Trình Lười Biếng Mất</Text>
-      <Text style={styles.sectionSubtitle}>
-        Khám Phá Thói Quen Vận Động Dễ Dàng
-      </Text>
+      <View style={styles.exerciseListContainer}>
+        <Text style={styles.sectionTitle}>Hành Trình Lười Biếng Mất</Text>
+        <Text style={styles.sectionSubtitle}>
+          Khám Phá Thói Quen Vận Động Dễ Dàng
+        </Text>
 
-      <ScrollView style={styles.exerciseList}>
-        {exercises.map((exercise) => (
-          <TouchableOpacity
-            key={exercise.id}
-            style={styles.exerciseCard}
-            onPress={() => handleExercisePress(exercise)}
-          >
-            <Image source={exercise.image} style={styles.exerciseImage} />
-            <View style={styles.exerciseInfo}>
-              <Text style={styles.exerciseTitle}>{exercise.title}</Text>
-              <View style={styles.exerciseDetails}>
-                <View style={styles.detailRow}>
-                  <Ionicons name="timer-outline" size={16} color="#888" />
-                  <Text style={styles.exerciseDuration}>
-                    {exercise.duration}
-                  </Text>
-                </View>
-                <View style={styles.detailRow}>
-                  <Ionicons name="star" size={16} color="#888" />
-                  <Text style={styles.exercisePoints}>{exercise.points}</Text>
+        <ScrollView style={styles.exerciseList}>
+          {exercises.map((exercise) => (
+            <TouchableOpacity
+              key={exercise.id}
+              style={styles.exerciseCard}
+              onPress={() => handleExercisePress(exercise)}
+            >
+              <Image source={exercise.image} style={styles.exerciseImage} />
+              <View style={styles.exerciseInfo}>
+                <Text style={styles.exerciseTitle}>{exercise.title}</Text>
+                <View style={styles.exerciseDetails}>
+                  <View style={styles.detailRow}>
+                    <Ionicons name="timer-outline" size={16} color="#888" />
+                    <Text style={styles.exerciseDuration}>
+                      {exercise.duration}
+                    </Text>
+                  </View>
+                  <View style={styles.detailRow}>
+                    <Ionicons name="star" size={16} color="#888" />
+                    <Text style={styles.exercisePoints}>{exercise.points}</Text>
+                  </View>
                 </View>
               </View>
-            </View>
-            <TouchableOpacity style={styles.favoriteButton}>
-              <Ionicons name="star-outline" size={24} color="#b3a0ff" />
+              <TouchableOpacity style={styles.favoriteButton}>
+                <Ionicons name="star-outline" size={24} color="#b3a0ff" />
+              </TouchableOpacity>
             </TouchableOpacity>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 };

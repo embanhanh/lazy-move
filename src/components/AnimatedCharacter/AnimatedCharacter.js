@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, View, Text, StyleSheet, Image } from "react-native";
-import { COLORS } from "../../constants/theme";
+import { COLORS, SIZES } from "../../constants/theme";
 
 // const { width } = Dimensions.get("window");
 
@@ -141,19 +141,20 @@ const AnimatedCharacter = () => {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    marginVertical: 20,
-    paddingHorizontal: 20,
+    flex: 1,
   },
   characterWithChat: {
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
+    flex: 1,
   },
   characterContainer: {
-    width: 150,
-    height: 150,
+    width: 160,
+    height: 160,
     position: "relative",
-    marginLeft: 30,
+    marginLeft: "12%",
+    marginTop: "15%",
   },
   character: {
     width: "100%",
@@ -166,8 +167,8 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 0,
     width: "50%",
     position: "absolute",
-    bottom: "70%",
-    right: 10,
+    bottom: "50%",
+    right: 5,
   },
   chatTextContainer: {
     flex: 1,
