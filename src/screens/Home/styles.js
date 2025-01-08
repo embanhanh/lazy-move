@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { COLORS, SIZES } from "../../constants/theme";
+import { COLORS, SIZES, TextStyles, FONTS } from "../../constants/theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -17,12 +17,11 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   greeting: {
-    fontSize: SIZES.text.header,
-    fontWeight: "bold",
+    ...TextStyles.header,
     color: COLORS.primary,
   },
   subGreeting: {
-    fontSize: SIZES.text.medium,
+    ...TextStyles.description,
     color: COLORS.text.primary,
     marginTop: 4,
   },
@@ -37,13 +36,13 @@ export const styles = StyleSheet.create({
     flex: 1.618,
   },
   sectionTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: COLORS.text.secondary,
+    ...TextStyles.title,
+    color: COLORS.secondary,
     paddingHorizontal: 20,
   },
   sectionSubtitle: {
-    fontSize: 14,
+    fontSize: SIZES.text.medium,
+    fontFamily: FONTS.medium,
     color: "#888",
     paddingHorizontal: 20,
     marginBottom: 15,
@@ -70,8 +69,7 @@ export const styles = StyleSheet.create({
     marginLeft: 15,
   },
   exerciseTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
+    ...TextStyles.emphasis,
     color: "#fff",
     marginBottom: 5,
   },
@@ -85,7 +83,7 @@ export const styles = StyleSheet.create({
     gap: 4,
   },
   exerciseDuration: {
-    fontSize: 14,
+    ...TextStyles.small,
     color: "#888",
   },
   exercisePoints: {

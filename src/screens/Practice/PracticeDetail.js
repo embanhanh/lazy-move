@@ -9,7 +9,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS, SIZES } from "../../constants/theme";
+import { COLORS, SIZES, TextStyles, FONTS } from "../../constants/theme";
 import { CommonActions } from "@react-navigation/native";
 
 const PracticeDetail = ({ route, navigation }) => {
@@ -31,7 +31,7 @@ const PracticeDetail = ({ route, navigation }) => {
     setMaxHeight(24 * 2);
   };
 
-  const shouldShowMoreButton = textHeight > 3;
+  const shouldShowMoreButton = textHeight > 5;
 
   const handleStartVideo = () => {
     // Xử lý khi nhấn nút play video
@@ -105,29 +105,34 @@ const PracticeDetail = ({ route, navigation }) => {
             onLayout={onContainerLayout}
           >
             <Text style={styles.descriptionTitle}>Mô tả bài tập</Text>
-            <Text
-              style={[
-                styles.description,
-                !isDescriptionExpanded && styles.descriptionCollapsed,
-              ]}
-              numberOfLines={isDescriptionExpanded ? undefined : 2}
-              onTextLayout={onTextLayout}
-            >
-              {description}
-            </Text>
-            {shouldShowMoreButton && (
-              <TouchableOpacity
-                style={styles.expandButton}
-                onPress={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
+            <ScrollView style={styles.descriptionScrollView}>
+              <Text
+                style={[
+                  styles.description,
+                  !isDescriptionExpanded && styles.descriptionCollapsed,
+                ]}
+                numberOfLines={isDescriptionExpanded ? undefined : 4}
+                onTextLayout={onTextLayout}
               >
-                <Text style={styles.expandButtonText}>
-                  {isDescriptionExpanded ? "Thu gọn" : "Xem thêm"}
-                </Text>
-              </TouchableOpacity>
-            )}
+                {description}
+              </Text>
+              {shouldShowMoreButton && (
+                <TouchableOpacity
+                  style={styles.expandButton}
+                  onPress={() =>
+                    setIsDescriptionExpanded(!isDescriptionExpanded)
+                  }
+                >
+                  <Text style={styles.expandButtonText}>
+                    {isDescriptionExpanded ? "Thu gọn" : "Xem thêm"}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </ScrollView>
           </View>
         </View>
-
+      </ScrollView>
+      <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.startButton}>
           <Text style={styles.startButtonText}>Bắt Đầu Tập</Text>
         </TouchableOpacity>
@@ -138,7 +143,7 @@ const PracticeDetail = ({ route, navigation }) => {
             <Text style={styles.magicButtonText}>Làm giúp tôi</Text>
           </View>
         </TouchableOpacity>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -151,25 +156,24 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    padding: SIZES.padding.large,
+    padding: SIZES.padding.medium,
     paddingTop: 40,
   },
   backButton: {
-    padding: SIZES.padding.small,
+    marginRight: SIZES.padding.small,
   },
   headerTitle: {
-    flex: 1,
     fontSize: SIZES.text.header,
+    fontFamily: FONTS.system,
     fontWeight: "bold",
     color: COLORS.primary,
-    marginLeft: SIZES.padding.small,
   },
   content: {
     flex: 1,
     padding: SIZES.padding.large,
   },
   contentContainer: {
-    paddingBottom: SIZES.padding.xLarge,
+    // paddingBottom: SIZES.padding.xLarge,
   },
   imageContainer: {
     width: "100%",
@@ -216,7 +220,6 @@ const styles = StyleSheet.create({
     borderRadius: SIZES.radius.medium,
     padding: SIZES.padding.large,
     marginBottom: SIZES.padding.large,
-    // Shadow cho card
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -225,6 +228,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    flex: 1,
+    minHeight: 250,
   },
   infoHeader: {
     flexDirection: "row",
@@ -242,9 +247,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   infoText: {
-    color: COLORS.text.primary,
     fontSize: SIZES.text.medium,
-    fontWeight: "500",
+    fontFamily: FONTS.medium,
+    color: COLORS.text.primary,
   },
   divider: {
     height: 1,
@@ -253,16 +258,18 @@ const styles = StyleSheet.create({
   },
   descriptionContainer: {
     padding: SIZES.padding.small,
+    flex: 1,
   },
   descriptionTitle: {
-    color: COLORS.secondary,
     fontSize: SIZES.text.large,
+    fontFamily: FONTS.system,
     fontWeight: "bold",
-    marginBottom: SIZES.padding.small,
+    color: COLORS.secondary,
   },
   description: {
-    color: COLORS.text.primary,
     fontSize: SIZES.text.medium,
+    fontFamily: FONTS.regular,
+    color: COLORS.text.primary,
     lineHeight: 24,
   },
   descriptionCollapsed: {
@@ -273,9 +280,9 @@ const styles = StyleSheet.create({
     marginTop: SIZES.padding.small,
   },
   expandButtonText: {
-    color: COLORS.secondary,
     fontSize: SIZES.text.medium,
-    fontWeight: "500",
+    fontFamily: FONTS.medium,
+    color: COLORS.secondary,
   },
   startButton: {
     backgroundColor: COLORS.primary,
@@ -285,9 +292,10 @@ const styles = StyleSheet.create({
     marginBottom: SIZES.padding.medium,
   },
   startButtonText: {
-    color: COLORS.text.primary,
     fontSize: SIZES.text.large,
+    fontFamily: FONTS.system,
     fontWeight: "bold",
+    color: COLORS.text.primary,
   },
   magicButton: {
     backgroundColor: COLORS.background,
@@ -296,7 +304,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderColor: COLORS.secondary,
-    marginBottom: SIZES.padding.large,
   },
   magicButtonContent: {
     flexDirection: "row",
@@ -304,9 +311,25 @@ const styles = StyleSheet.create({
     gap: SIZES.padding.small,
   },
   magicButtonText: {
-    color: COLORS.text.primary,
     fontSize: SIZES.text.large,
+    fontFamily: FONTS.system,
     fontWeight: "bold",
+    color: COLORS.text.primary,
+  },
+  buttonsContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: COLORS.background,
+    padding: SIZES.padding.large,
+    paddingBottom: SIZES.padding.medium,
+    borderTopWidth: 1,
+    borderTopColor: `${COLORS.primary}20`,
+  },
+  descriptionScrollView: {
+    flex: 1,
+    maxHeight: 150,
   },
 });
 

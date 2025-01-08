@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { COLORS, SIZES } from "../../constants/theme";
+import { COLORS, SIZES, TextStyles, FONTS } from "../../constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -37,7 +37,7 @@ const Social = ({ navigation }) => {
     {
       id: 1,
       title: "Tuần Siêng Năng",
-      description: "Cả nhóm hoàn thành 10 bài tập trong tuần",
+      description: "Nhóm hoàn thành 10 bài tập trong tuần",
       progress: 6,
       goal: 10,
       reward: 500,
@@ -148,7 +148,7 @@ const Social = ({ navigation }) => {
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Bạn Bè Lười</Text>
             <TouchableOpacity style={styles.addButton}>
-              <Ionicons name="person-add" size={24} color={COLORS.secondary} />
+              <Ionicons name="person-add" size={24} color={COLORS.primary} />
             </TouchableOpacity>
           </View>
 
@@ -214,12 +214,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: SIZES.text.header,
+    fontFamily: FONTS.system,
     fontWeight: "bold",
     color: COLORS.primary,
-    marginBottom: 4,
   },
   subtitle: {
     fontSize: SIZES.text.medium,
+    fontFamily: FONTS.regular,
     color: COLORS.text.primary,
     marginTop: 4,
   },
@@ -231,6 +232,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: SIZES.text.large,
+    fontFamily: FONTS.system,
     fontWeight: "bold",
     color: COLORS.text.primary,
   },
@@ -254,6 +256,7 @@ const styles = StyleSheet.create({
   },
   challengeTitle: {
     fontSize: SIZES.text.large,
+    fontFamily: FONTS.system,
     fontWeight: "bold",
     color: COLORS.text.primary,
   },
@@ -267,15 +270,15 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   rewardText: {
-    color: COLORS.secondary,
     fontSize: SIZES.text.small,
-    fontWeight: "bold",
+    fontFamily: FONTS.bold,
+    color: COLORS.secondary,
   },
   challengeDescription: {
     fontSize: SIZES.text.medium,
+    fontFamily: FONTS.regular,
     color: COLORS.text.primary,
     opacity: 0.8,
-    marginBottom: SIZES.padding.medium,
   },
   progressContainer: {
     flexDirection: "row",
@@ -296,6 +299,7 @@ const styles = StyleSheet.create({
   },
   progressText: {
     fontSize: SIZES.text.medium,
+    fontFamily: FONTS.regular,
     color: COLORS.text.primary,
     opacity: 0.8,
   },
@@ -310,6 +314,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: SIZES.text.small,
+    fontFamily: FONTS.regular,
     color: COLORS.text.primary,
     opacity: 0.8,
   },
@@ -340,6 +345,7 @@ const styles = StyleSheet.create({
   },
   friendName: {
     fontSize: SIZES.text.medium,
+    fontFamily: FONTS.system,
     fontWeight: "bold",
     color: COLORS.text.primary,
   },
@@ -354,6 +360,7 @@ const styles = StyleSheet.create({
   },
   statText: {
     fontSize: SIZES.text.small,
+    fontFamily: FONTS.regular,
     color: COLORS.text.primary,
     opacity: 0.8,
   },

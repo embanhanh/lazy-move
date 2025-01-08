@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { COLORS, SIZES } from "../../constants/theme";
+import { COLORS, SIZES, TextStyles, FONTS } from "../../constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -81,10 +81,12 @@ const ChallengeDetail = ({ route, navigation }) => {
       <View style={styles.mainContainer}>
         {/* Phần thông tin thử thách - cố định */}
         <View style={styles.challengeInfo}>
-          <Text style={styles.title}>{challenge.title}</Text>
-          <View style={styles.rewardBadge}>
-            <Ionicons name="star" size={16} color={COLORS.secondary} />
-            <Text style={styles.rewardText}>{challenge.reward} LP</Text>
+          <View style={styles.challengeHeader}>
+            <Text style={styles.title}>{challenge.title}</Text>
+            <View style={styles.rewardBadge}>
+              <Ionicons name="star" size={16} color={COLORS.secondary} />
+              <Text style={styles.rewardText}>{challenge.reward} LP</Text>
+            </View>
           </View>
           <Text style={styles.description}>{challenge.description}</Text>
 
@@ -210,12 +212,13 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: SIZES.text.header,
+    fontFamily: FONTS.system,
     fontWeight: "bold",
     color: COLORS.primary,
-    marginBottom: 4,
   },
   headerSubtitle: {
     fontSize: SIZES.text.medium,
+    fontFamily: FONTS.regular,
     color: COLORS.text.primary,
     opacity: 0.8,
   },
@@ -229,12 +232,20 @@ const styles = StyleSheet.create({
     padding: SIZES.padding.large,
     margin: SIZES.padding.large,
     marginBottom: SIZES.padding.medium,
+    gap: SIZES.padding.small,
+  },
+  challengeHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: SIZES.padding.small,
   },
   title: {
     fontSize: SIZES.text.xLarge,
+    fontFamily: FONTS.system,
     fontWeight: "bold",
     color: COLORS.text.primary,
-    marginBottom: SIZES.padding.small,
+    flex: 1,
   },
   rewardBadge: {
     flexDirection: "row",
@@ -243,28 +254,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: SIZES.padding.small,
     paddingVertical: 4,
     borderRadius: SIZES.radius.small,
-    alignSelf: "flex-start",
-    marginBottom: SIZES.padding.medium,
     gap: 4,
   },
   rewardText: {
+    fontSize: SIZES.text.medium,
+    fontFamily: FONTS.bold,
     color: COLORS.secondary,
-    fontSize: SIZES.text.small,
-    fontWeight: "bold",
   },
   description: {
     fontSize: SIZES.text.medium,
+    fontFamily: FONTS.regular,
     color: COLORS.text.primary,
     opacity: 0.8,
-    marginBottom: SIZES.padding.large,
   },
   progressSection: {
     marginBottom: SIZES.padding.medium,
   },
   progressTitle: {
     fontSize: SIZES.text.medium,
+    fontFamily: FONTS.medium,
     color: COLORS.text.primary,
-    marginBottom: SIZES.padding.small,
   },
   progressContainer: {
     flexDirection: "row",
@@ -284,6 +293,7 @@ const styles = StyleSheet.create({
   },
   progressText: {
     fontSize: SIZES.text.medium,
+    fontFamily: FONTS.regular,
     color: COLORS.text.primary,
     opacity: 0.8,
   },
@@ -294,6 +304,7 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontSize: SIZES.text.medium,
+    fontFamily: FONTS.regular,
     color: COLORS.text.primary,
     opacity: 0.8,
   },
@@ -336,6 +347,7 @@ const styles = StyleSheet.create({
   },
   participantName: {
     fontSize: SIZES.text.medium,
+    fontFamily: FONTS.system,
     fontWeight: "bold",
     color: COLORS.text.primary,
   },

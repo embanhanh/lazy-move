@@ -1,3 +1,5 @@
+import { useFonts } from "expo-font";
+
 export const COLORS = {
   primary: "#b3a0ff", // Màu tím chủ đạo của bạn
   secondary: "#e2f163", // Màu vàng cho các điểm nhấn
@@ -11,6 +13,14 @@ export const COLORS = {
     active: "#e2f163", // Màu icon khi active
     inactive: "#fff", // Màu icon khi không active
   },
+};
+
+export const FONTS = {
+  regular: "Quicksand-Regular",
+  medium: "Quicksand-Medium",
+  semiBold: "Quicksand-SemiBold",
+  bold: "Quicksand-Bold",
+  system: undefined,
 };
 
 export const SIZES = {
@@ -32,5 +42,43 @@ export const SIZES = {
     xLarge: 20,
     title: 20,
     header: 24,
+  },
+};
+
+export const TextStyles = {
+  header: {
+    fontSize: SIZES.text.header,
+    fontFamily: FONTS.system,
+    fontWeight: "bold",
+  },
+  title: {
+    fontSize: SIZES.text.title,
+    fontFamily: FONTS.system,
+    fontWeight: "bold",
+  },
+  subtitle: {
+    fontSize: SIZES.text.large,
+    fontFamily: FONTS.medium,
+  },
+  description: {
+    fontSize: SIZES.text.medium,
+    fontFamily: FONTS.regular,
+  },
+  emphasis: {
+    fontSize: SIZES.text.medium,
+    fontFamily: FONTS.system,
+    fontWeight: "bold",
+  },
+  highlight: {
+    fontSize: SIZES.text.medium,
+    fontFamily: FONTS.bold,
+  },
+  regular: {
+    fontSize: SIZES.text.medium,
+    fontFamily: FONTS.regular,
+  },
+  small: {
+    fontSize: SIZES.text.small,
+    fontFamily: FONTS.regular,
   },
 };

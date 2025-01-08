@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { COLORS, SIZES } from "../../constants/theme";
+import { COLORS, SIZES, TextStyles } from "../../constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import StreakFire from "../../components/StreakFire/StreakFire";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -232,13 +232,11 @@ const styles = StyleSheet.create({
     padding: SIZES.padding.large,
   },
   title: {
-    fontSize: SIZES.text.header,
-    fontWeight: "bold",
+    ...TextStyles.header,
     color: COLORS.primary,
-    marginBottom: 4,
   },
   subtitle: {
-    fontSize: SIZES.text.medium,
+    ...TextStyles.description,
     color: COLORS.text.primary,
     marginTop: 4,
   },
@@ -260,8 +258,7 @@ const styles = StyleSheet.create({
     marginBottom: SIZES.padding.large,
   },
   weekTitle: {
-    fontSize: SIZES.text.large,
-    fontWeight: "bold",
+    ...TextStyles.large,
     color: COLORS.text.primary,
     marginBottom: SIZES.padding.medium,
   },
@@ -275,7 +272,7 @@ const styles = StyleSheet.create({
     gap: SIZES.padding.small,
   },
   dayText: {
-    fontSize: SIZES.text.small,
+    ...TextStyles.small,
     color: COLORS.text.primary,
     opacity: 0.8,
   },
@@ -301,12 +298,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   statNumber: {
-    fontSize: SIZES.text.xLarge,
-    fontWeight: "bold",
+    ...TextStyles.emphasis,
     color: COLORS.secondary,
   },
   statLabel: {
-    fontSize: SIZES.text.small,
+    ...TextStyles.small,
     color: COLORS.text.primary,
     marginTop: 4,
   },
@@ -321,8 +317,7 @@ const styles = StyleSheet.create({
     padding: SIZES.padding.large,
   },
   activityTitle: {
-    fontSize: SIZES.text.large,
-    fontWeight: "bold",
+    ...TextStyles.large,
     color: COLORS.text.primary,
     marginBottom: SIZES.padding.medium,
   },
@@ -330,7 +325,7 @@ const styles = StyleSheet.create({
     marginBottom: SIZES.padding.large,
   },
   dateLabel: {
-    fontSize: SIZES.text.medium,
+    ...TextStyles.medium,
     color: COLORS.text.primary,
     marginBottom: SIZES.padding.small,
     opacity: 0.8,
@@ -357,7 +352,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   activityName: {
-    fontSize: SIZES.text.medium,
+    ...TextStyles.medium,
     color: COLORS.text.primary,
   },
   activityRight: {
@@ -370,12 +365,12 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   detailText: {
-    fontSize: SIZES.text.small,
+    ...TextStyles.small,
     color: COLORS.text.primary,
     opacity: 0.8,
   },
   missedText: {
-    fontSize: SIZES.text.small,
+    ...TextStyles.small,
     color: COLORS.text.primary,
     opacity: 0.8,
   },

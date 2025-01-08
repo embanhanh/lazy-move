@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS, SIZES } from "../../constants/theme";
+import { COLORS, SIZES, TextStyles } from "../../constants/theme";
 import exercise1 from "../../../assets/imgs/exercise1.png";
 import { useNavigation } from "@react-navigation/native";
 import CircleProgress from "../CircleProgress/CircleProgress";
@@ -231,8 +231,7 @@ const styles = StyleSheet.create({
     gap: SIZES.padding.small,
   },
   title: {
-    fontSize: SIZES.text.large,
-    fontWeight: "bold",
+    ...TextStyles.title,
     color: COLORS.text.primary,
   },
   messageContainer: {
@@ -242,16 +241,15 @@ const styles = StyleSheet.create({
     gap: SIZES.padding.small,
   },
   message: {
-    fontSize: SIZES.text.large,
+    ...TextStyles.description,
     color: COLORS.text.primary,
     lineHeight: 24,
     textAlign: "center",
   },
   motivationalPhrase: {
-    fontSize: SIZES.text.medium,
+    ...TextStyles.subtitle,
     color: COLORS.secondary,
     fontStyle: "italic",
-    textAlign: "center",
   },
   rewardContainer: {
     flexDirection: "row",
@@ -292,12 +290,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
   },
   buttonTextLater: {
+    ...TextStyles.medium,
     color: COLORS.text.primary,
-    fontSize: SIZES.text.medium,
   },
   buttonTextExercise: {
+    ...TextStyles.medium,
     color: COLORS.text.primary,
-    fontSize: SIZES.text.medium,
     fontWeight: "bold",
   },
   iconContainer: {

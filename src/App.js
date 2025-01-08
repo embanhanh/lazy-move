@@ -1,6 +1,9 @@
 // App.js
 import React, { useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  getFocusedRouteNameFromRoute,
+} from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Text, StatusBar, Platform } from "react-native";
@@ -16,6 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 import HistoryScreen from "./screens/History/History";
 import Social from "./screens/Social/Social";
 import ChallengeDetail from "./screens/Social/ChallengeDetail";
+import { useFonts } from "expo-font";
 // Stacks cho từng tab
 const HomeStack = createNativeStackNavigator();
 const PracticeStack = createNativeStackNavigator();
@@ -69,30 +73,14 @@ const HomeStackScreen = () => (
       component={Home}
       options={{ title: "Trang chủ", headerShown: false }}
     />
-  </HomeStack.Navigator>
-);
-
-// Màn hình cho Profile Stack
-const PracticeScreen = () => (
-  <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-    <Text>Bài tập</Text>
-  </View>
-);
-
-// Stack Navigator cho Practice
-const PracticeStackScreen = () => (
-  <PracticeStack.Navigator>
-    <PracticeStack.Screen
-      name="PracticeMain"
-      component={PracticeScreen}
-      options={{ headerShown: false }}
-    />
-    <PracticeStack.Screen
+    <HomeStack.Screen
       name="PracticeDetail"
       component={PracticeDetail}
-      options={{ headerShown: false }}
+      options={{
+        headerShown: false,
+      }}
     />
-  </PracticeStack.Navigator>
+  </HomeStack.Navigator>
 );
 
 // Màn hình cho Settings Stack
@@ -127,7 +115,13 @@ const SocialStackScreen = () => {
   return (
     <SocialStack.Navigator screenOptions={{ headerShown: false }}>
       <SocialStack.Screen name="SocialMain" component={Social} />
-      <SocialStack.Screen name="ChallengeDetail" component={ChallengeDetail} />
+      <SocialStack.Screen
+        name="ChallengeDetail"
+        component={ChallengeDetail}
+        options={{
+          headerShown: false,
+        }}
+      />
     </SocialStack.Navigator>
   );
 };
@@ -136,6 +130,13 @@ const SocialStackScreen = () => {
 const Tab = createBottomTabNavigator();
 
 const App = () => {
+  const [fontsLoaded] = useFonts({
+    "Quicksand-Regular": require("../assets/fonts/Quicksand-Regular.ttf"),
+    "Quicksand-Medium": require("../assets/fonts/Quicksand-Medium.ttf"),
+    "Quicksand-SemiBold": require("../assets/fonts/Quicksand-SemiBold.ttf"),
+    "Quicksand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
+  });
+
   useEffect(() => {
     const setupNavigation = async () => {
       if (Platform.OS === "android") {
@@ -148,6 +149,21 @@ const App = () => {
     setupNavigation();
   }, []);
 
+  if (!fontsLoaded) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: COLORS.background,
+        }}
+      >
+        <Text style={{ color: COLORS.text.primary }}>Loading...</Text>
+      </View>
+    );
+  }
+
   return (
     <SafeAreaProvider>
       <StatusBar
@@ -158,15 +174,12 @@ const App = () => {
       <NavigationContainer>
         <View style={{ flex: 1 }}>
           <Tab.Navigator
-            screenOptions={({ route }) => ({
+            screenOptions={({ route, navigation }) => ({
               headerShown: false,
               tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
-
                 if (route.name === "HomeStack") {
                   iconName = "home";
-                } else if (route.name === "PracticeStack") {
-                  iconName = "list";
                 } else if (route.name === "SettingsStack") {
                   iconName = "settings";
                 } else if (route.name === "HistoryStack") {
@@ -174,17 +187,21 @@ const App = () => {
                 } else if (route.name === "SocialStack") {
                   iconName = "people";
                 }
-
                 return <Ionicons name={iconName} size={size} color={color} />;
               },
               tabBarActiveTintColor: COLORS.icon.active,
               tabBarInactiveTintColor: COLORS.icon.inactive,
-              tabBarStyle: {
-                height: 60,
-                paddingBottom: 8,
-                paddingTop: 8,
-                backgroundColor: COLORS.primary,
-              },
+              tabBarStyle: ((state) => {
+                const routeName = getFocusedRouteNameFromRoute(route);
+                const hideOnScreens = ["PracticeDetail", "ChallengeDetail"];
+                return {
+                  display: hideOnScreens.includes(routeName) ? "none" : "flex",
+                  height: 60,
+                  paddingBottom: 8,
+                  paddingTop: 8,
+                  backgroundColor: COLORS.primary,
+                };
+              })(),
               tabBarLabelStyle: {
                 fontSize: SIZES.text.small,
               },
@@ -201,32 +218,6 @@ const App = () => {
                 tabPress: () => {
                   navigation.navigate("HomeStack", {
                     screen: "HomeMain",
-                  });
-                },
-              })}
-            />
-            <Tab.Screen
-              name="PracticeStack"
-              component={PracticeStackScreen}
-              options={{
-                tabBarLabel: "Bài tập",
-                headerShown: false,
-              }}
-              listeners={({ navigation }) => ({
-                tabPress: (e) => {
-                  // Prevent default action
-                  e.preventDefault();
-                  // Reset the stack to initial route
-                  navigation.reset({
-                    index: 0,
-                    routes: [
-                      {
-                        name: "PracticeStack",
-                        state: {
-                          routes: [{ name: "PracticeMain" }],
-                        },
-                      },
-                    ],
                   });
                 },
               })}

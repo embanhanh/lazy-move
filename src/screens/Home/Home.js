@@ -15,8 +15,7 @@ import { COLORS } from "../../constants/theme";
 import AnimatedCharacter from "../../components/AnimatedCharacter/AnimatedCharacter";
 import LazyReminder from "../../components/LazyReminder/LazyReminder";
 
-const Home = () => {
-  const navigation = useNavigation();
+const Home = ({ navigation }) => {
   const [showReminder, setShowReminder] = useState(false);
 
   const exercises = [
@@ -60,23 +59,10 @@ const Home = () => {
   ];
 
   const handleExercisePress = (exercise) => {
-    navigation.dispatch(
-      CommonActions.navigate({
-        name: "PracticeStack",
-        params: {
-          screen: "PracticeDetail",
-          params: {
-            exerciseId: exercise.id,
-            title: exercise.title,
-            duration: exercise.duration,
-            points: exercise.points,
-            image: exercise.image,
-            description: exercise.description,
-            previousScreen: "Home",
-          },
-        },
-      })
-    );
+    navigation.navigate("PracticeDetail", {
+      ...exercise,
+      previousScreen: "Home",
+    });
   };
 
   return (
@@ -94,7 +80,7 @@ const Home = () => {
           style={styles.notificationButton}
           onPress={() => setShowReminder((prev) => !prev)}
         >
-          <Ionicons name="notifications" size={24} color="#b3a0ff" />
+          <Ionicons name="notifications" size={24} color={COLORS.primary} />
         </TouchableOpacity>
       </View>
 
@@ -134,7 +120,11 @@ const Home = () => {
                 </View>
               </View>
               <TouchableOpacity style={styles.favoriteButton}>
-                <Ionicons name="star-outline" size={24} color="#b3a0ff" />
+                <Ionicons
+                  name="star-outline"
+                  size={24}
+                  color={COLORS.primary}
+                />
               </TouchableOpacity>
             </TouchableOpacity>
           ))}

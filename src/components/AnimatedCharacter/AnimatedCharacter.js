@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, View, Text, StyleSheet, Image } from "react-native";
-import { COLORS, SIZES } from "../../constants/theme";
+import { COLORS, SIZES, TextStyles, FONTS } from "../../constants/theme";
 
 // const { width } = Dimensions.get("window");
 
@@ -165,10 +165,10 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 20,
     borderBottomLeftRadius: 0,
-    width: "50%",
+    width: "45%",
     position: "absolute",
     bottom: "50%",
-    right: 5,
+    right: 15,
   },
   chatTextContainer: {
     flex: 1,
@@ -176,10 +176,11 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   chatText: {
+    ...TextStyles.description,
     color: "#fff",
-    fontSize: 14,
     lineHeight: 20,
     flexShrink: 1,
+    fontFamily: FONTS.medium,
   },
 });
 

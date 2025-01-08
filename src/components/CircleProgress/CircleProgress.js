@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { View, Text, StyleSheet, Animated } from "react-native";
-import { COLORS } from "../../constants/theme";
+import { COLORS, SIZES, TextStyles } from "../../constants/theme";
 
 const CircleProgress = ({ seconds = 3, onComplete }) => {
   const [timeLeft, setTimeLeft] = useState(seconds);
@@ -110,9 +110,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
+    ...TextStyles.emphasis,
     color: COLORS.secondary,
-    fontSize: 14,
-    fontWeight: "bold",
   },
 });
 

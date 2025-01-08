@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { COLORS } from "../../constants/theme";
+import { COLORS, SIZES, TextStyles, FONTS } from "../../constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const StreakFire = ({ streak }) => {
@@ -68,14 +68,14 @@ const styles = StyleSheet.create({
   },
   streakNumber: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontFamily: FONTS.bold,
     color: COLORS.secondary,
     marginBottom: -4,
   },
   streakText: {
     fontSize: 20,
     color: COLORS.secondary,
-    fontWeight: "bold",
+    fontFamily: FONTS.bold,
   },
 });
 
