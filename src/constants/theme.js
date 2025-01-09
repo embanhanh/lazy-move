@@ -13,6 +13,7 @@ export const COLORS = {
     active: "#e2f163", // Màu icon khi active
     inactive: "#fff", // Màu icon khi không active
   },
+  success: "#4CAF50",
 };
 
 export const FONTS = {

@@ -20,10 +20,12 @@ import HistoryScreen from "./screens/History/History";
 import Social from "./screens/Social/Social";
 import ChallengeDetail from "./screens/Social/ChallengeDetail";
 import { useFonts } from "expo-font";
+import Account from "./screens/Account/Account";
+import LazyPets from "./screens/LazyPets/LazyPets";
 // Stacks cho từng tab
 const HomeStack = createNativeStackNavigator();
 const PracticeStack = createNativeStackNavigator();
-const SettingsStack = createNativeStackNavigator();
+const AccountStack = createNativeStackNavigator();
 const HistoryStack = createNativeStackNavigator();
 const SocialStack = createNativeStackNavigator();
 // Stack Navigator cho Home
@@ -91,14 +93,21 @@ const SettingsScreen = () => (
 );
 
 // Stack Navigator cho Settings
-const SettingsStackScreen = () => (
-  <SettingsStack.Navigator>
-    <SettingsStack.Screen
-      name="SettingsMain"
-      component={SettingsScreen}
-      options={{ title: "Cài đặt", headerShown: false }}
+const AccountStackScreen = () => (
+  <AccountStack.Navigator>
+    <AccountStack.Screen
+      name="AccountMain"
+      component={Account}
+      options={{ headerShown: false }}
     />
-  </SettingsStack.Navigator>
+    <AccountStack.Screen
+      name="LazyPets"
+      component={LazyPets}
+      options={{
+        headerShown: false,
+      }}
+    />
+  </AccountStack.Navigator>
 );
 
 const HistoryStackScreen = () => (
@@ -180,10 +189,10 @@ const App = () => {
                 let iconName;
                 if (route.name === "HomeStack") {
                   iconName = "home";
-                } else if (route.name === "SettingsStack") {
-                  iconName = "settings";
+                } else if (route.name === "AccountStack") {
+                  iconName = "person";
                 } else if (route.name === "HistoryStack") {
-                  iconName = "journal";
+                  iconName = "flame";
                 } else if (route.name === "SocialStack") {
                   iconName = "people";
                 }
@@ -193,7 +202,11 @@ const App = () => {
               tabBarInactiveTintColor: COLORS.icon.inactive,
               tabBarStyle: ((state) => {
                 const routeName = getFocusedRouteNameFromRoute(route);
-                const hideOnScreens = ["PracticeDetail", "ChallengeDetail"];
+                const hideOnScreens = [
+                  "PracticeDetail",
+                  "ChallengeDetail",
+                  "LazyPets",
+                ];
                 return {
                   display: hideOnScreens.includes(routeName) ? "none" : "flex",
                   height: 60,
@@ -222,21 +235,7 @@ const App = () => {
                 },
               })}
             />
-            <Tab.Screen
-              name="SettingsStack"
-              component={SettingsStackScreen}
-              options={{
-                tabBarLabel: "Cài đặt",
-                headerShown: false,
-              }}
-              listeners={({ navigation }) => ({
-                tabPress: () => {
-                  navigation.navigate("SettingsStack", {
-                    screen: "SettingsMain",
-                  });
-                },
-              })}
-            />
+
             <Tab.Screen
               name="HistoryStack"
               component={HistoryStackScreen}
@@ -259,13 +258,27 @@ const App = () => {
                 tabBarLabel: "Cộng đồng",
                 headerShown: false,
                 tabBarIcon: ({ focused, color, size }) => (
-                  <Ionicons
-                    name={focused ? "people" : "people-outline"}
-                    size={size}
-                    color={color}
-                  />
+                  <Ionicons name={"people"} size={size} color={color} />
                 ),
               }}
+            />
+            <Tab.Screen
+              name="AccountStack"
+              component={AccountStackScreen}
+              options={{
+                tabBarLabel: "Tài khoản",
+                headerShown: false,
+                tabBarIcon: ({ focused, color, size }) => {
+                  return <Ionicons name={"person"} size={size} color={color} />;
+                },
+              }}
+              listeners={({ navigation }) => ({
+                tabPress: () => {
+                  navigation.navigate("AccountStack", {
+                    screen: "AccountMain",
+                  });
+                },
+              })}
             />
           </Tab.Navigator>
           {/* <LazyReminder /> */}
