@@ -93,6 +93,7 @@ export const styles = StyleSheet.create({
   },
   favoriteButton: {
     padding: 8,
+    transform: [{ scale: 1 }],
   },
   newTag: {
     position: "absolute",

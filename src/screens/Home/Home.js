@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  Animated,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, CommonActions } from "@react-navigation/native";
@@ -17,6 +18,8 @@ import LazyReminder from "../../components/LazyReminder/LazyReminder";
 
 const Home = ({ navigation }) => {
   const [showReminder, setShowReminder] = useState(false);
+  const [favorites, setFavorites] = useState(new Set());
+  const favoriteAnimations = useRef({}).current;
 
   const exercises = [
     {
@@ -65,9 +68,43 @@ const Home = ({ navigation }) => {
     });
   };
 
+  const toggleFavorite = (exerciseId) => {
+    if (!favoriteAnimations[exerciseId]) {
+      favoriteAnimations[exerciseId] = new Animated.Value(1);
+    }
+
+    Animated.sequence([
+      Animated.timing(favoriteAnimations[exerciseId], {
+        toValue: 0.8,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(favoriteAnimations[exerciseId], {
+        toValue: 1.2,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(favoriteAnimations[exerciseId], {
+        toValue: 1,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    setFavorites((prev) => {
+      const newFavorites = new Set(prev);
+      if (newFavorites.has(exerciseId)) {
+        newFavorites.delete(exerciseId);
+      } else {
+        newFavorites.add(exerciseId);
+      }
+      return newFavorites;
+    });
+  };
+
   return (
     <View style={styles.container}>
-      {showReminder && <LazyReminder />}
+      {showReminder && <LazyReminder onClose={() => setShowReminder(false)} />}
       {/* Header Section */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
@@ -119,13 +156,33 @@ const Home = ({ navigation }) => {
                   </View>
                 </View>
               </View>
-              <TouchableOpacity style={styles.favoriteButton}>
-                <Ionicons
-                  name="star-outline"
-                  size={24}
-                  color={COLORS.primary}
-                />
-              </TouchableOpacity>
+              <Animated.View
+                style={[
+                  styles.favoriteButton,
+                  {
+                    transform: [
+                      {
+                        scale: favoriteAnimations[exercise.id] || 1,
+                      },
+                    ],
+                  },
+                ]}
+              >
+                <TouchableOpacity
+                  onPress={() => toggleFavorite(exercise.id)}
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                >
+                  <Ionicons
+                    name={favorites.has(exercise.id) ? "star" : "star-outline"}
+                    size={24}
+                    color={
+                      favorites.has(exercise.id)
+                        ? COLORS.secondary
+                        : COLORS.primary
+                    }
+                  />
+                </TouchableOpacity>
+              </Animated.View>
             </TouchableOpacity>
           ))}
         </ScrollView>

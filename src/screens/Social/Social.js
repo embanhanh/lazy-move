@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,12 +6,16 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Modal,
+  TextInput,
 } from "react-native";
 import { COLORS, SIZES, TextStyles, FONTS } from "../../constants/theme";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Social = ({ navigation }) => {
+  const [showAddFriendModal, setShowAddFriendModal] = useState(false);
+
   // Data mẫu cho bạn bè
   const friends = [
     {
@@ -55,6 +59,80 @@ const Social = ({ navigation }) => {
       timeLeft: "2 ngày",
     },
   ];
+
+  // Data mẫu cho gợi ý kết bạn
+  const suggestedFriends = [
+    {
+      id: 3,
+      name: "Thông Lười",
+      mutualFriends: 3,
+      avatar: require("../../../assets/imgs/avatar1.jpg"),
+    },
+    {
+      id: 4,
+      name: "Nam Lười",
+      mutualFriends: 2,
+      avatar: require("../../../assets/imgs/avatar2.jpg"),
+    },
+  ];
+
+  const AddFriendModal = () => (
+    <Modal
+      visible={showAddFriendModal}
+      animationType="slide"
+      transparent={true}
+      onRequestClose={() => setShowAddFriendModal(false)}
+    >
+      <View style={styles.modalOverlay}>
+        <View style={styles.modalContent}>
+          {/* Header Modal */}
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>Thêm Bạn Lười</Text>
+            <TouchableOpacity
+              onPress={() => setShowAddFriendModal(false)}
+              style={styles.closeButton}
+            >
+              <Ionicons name="close" size={24} color={COLORS.text.primary} />
+            </TouchableOpacity>
+          </View>
+
+          {/* Search Input */}
+          <View style={styles.searchContainer}>
+            <Ionicons name="search" size={20} color={COLORS.text.secondary} />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Tìm kiếm bạn lười..."
+              placeholderTextColor={COLORS.text.secondary}
+            />
+          </View>
+
+          {/* Suggested Friends */}
+          <View style={styles.suggestedSection}>
+            <Text style={styles.suggestedTitle}>Gợi ý kết bạn</Text>
+            {suggestedFriends.map((friend) => (
+              <View key={friend.id} style={styles.suggestedCard}>
+                <View style={styles.suggestedInfo}>
+                  <Image
+                    source={friend.avatar}
+                    style={styles.suggestedAvatar}
+                  />
+                  <View>
+                    <Text style={styles.suggestedName}>{friend.name}</Text>
+                    <Text style={styles.mutualText}>
+                      {friend.mutualFriends} bạn chung
+                    </Text>
+                  </View>
+                </View>
+                <TouchableOpacity style={styles.addButton}>
+                  <Text style={styles.addButtonText}>Kết bạn</Text>
+                </TouchableOpacity>
+              </View>
+            ))}
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -147,7 +225,10 @@ const Social = ({ navigation }) => {
         <View style={styles.friendsContainer}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Bạn Bè Lười</Text>
-            <TouchableOpacity style={styles.addButton}>
+            <TouchableOpacity
+              style={styles.addFriendButton}
+              onPress={() => setShowAddFriendModal(true)}
+            >
               <Ionicons name="person-add" size={24} color={COLORS.primary} />
             </TouchableOpacity>
           </View>
@@ -191,6 +272,8 @@ const Social = ({ navigation }) => {
           ))}
         </View>
       </ScrollView>
+
+      <AddFriendModal />
     </SafeAreaView>
   );
 };
@@ -371,6 +454,98 @@ const styles = StyleSheet.create({
   },
   challengeScroll: {
     padding: SIZES.padding.small,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "flex-end",
+  },
+  modalContent: {
+    backgroundColor: COLORS.background,
+    borderTopLeftRadius: SIZES.radius.large,
+    borderTopRightRadius: SIZES.radius.large,
+    paddingTop: SIZES.padding.large,
+    maxHeight: "80%",
+  },
+  modalHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: SIZES.padding.large,
+    marginBottom: SIZES.padding.large,
+  },
+  modalTitle: {
+    fontSize: SIZES.text.large,
+    fontFamily: FONTS.bold,
+    color: COLORS.text.primary,
+  },
+  closeButton: {
+    padding: SIZES.padding.small,
+  },
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: COLORS.card,
+    margin: SIZES.padding.large,
+    padding: SIZES.padding.medium,
+    borderRadius: SIZES.radius.medium,
+    marginTop: 0,
+  },
+  searchInput: {
+    flex: 1,
+    marginLeft: SIZES.padding.small,
+    fontSize: SIZES.text.medium,
+    fontFamily: FONTS.regular,
+    color: COLORS.text.primary,
+  },
+  suggestedSection: {
+    padding: SIZES.padding.large,
+  },
+  suggestedTitle: {
+    fontSize: SIZES.text.medium,
+    fontFamily: FONTS.bold,
+    color: COLORS.text.primary,
+    marginBottom: SIZES.padding.medium,
+  },
+  suggestedCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: COLORS.card,
+    padding: SIZES.padding.medium,
+    borderRadius: SIZES.radius.medium,
+    marginBottom: SIZES.padding.small,
+  },
+  suggestedInfo: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: SIZES.padding.medium,
+  },
+  suggestedAvatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+  suggestedName: {
+    fontSize: SIZES.text.medium,
+    fontFamily: FONTS.bold,
+    color: COLORS.text.primary,
+  },
+  mutualText: {
+    fontSize: SIZES.text.small,
+    fontFamily: FONTS.regular,
+    color: COLORS.text.secondary,
+  },
+  addButton: {
+    backgroundColor: COLORS.primary,
+    paddingVertical: SIZES.padding.small,
+    paddingHorizontal: SIZES.padding.medium,
+    borderRadius: SIZES.radius.small,
+  },
+  addButtonText: {
+    fontSize: SIZES.text.small,
+    fontFamily: FONTS.bold,
+    color: COLORS.text.primary,
   },
 });
 

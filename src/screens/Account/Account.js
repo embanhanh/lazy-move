@@ -81,7 +81,7 @@ const Account = ({ navigation }) => {
             IconComponent={MaterialCommunityIcons}
             icon="whistle"
             title="Huấn Luyện Viên"
-            onPress={() => {}}
+            onPress={() => navigation.navigate("Trainers")}
           />
           <MenuItem
             IconComponent={Ionicons}

@@ -15,7 +15,7 @@ import CircleProgress from "../CircleProgress/CircleProgress";
 
 const { width } = Dimensions.get("window");
 
-const LazyReminder = () => {
+const LazyReminder = ({ onClose }) => {
   const navigation = useNavigation();
   const [visible, setVisible] = useState(false);
   const [currentReminder, setCurrentReminder] = useState(null);
@@ -120,6 +120,7 @@ const LazyReminder = () => {
       useNativeDriver: true,
     }).start(() => {
       setVisible(false);
+      onClose();
     });
   };
 

@@ -22,6 +22,7 @@ import ChallengeDetail from "./screens/Social/ChallengeDetail";
 import { useFonts } from "expo-font";
 import Account from "./screens/Account/Account";
 import LazyPets from "./screens/LazyPets/LazyPets";
+import Trainers from "./screens/Trainers/Trainers";
 // Stacks cho từng tab
 const HomeStack = createNativeStackNavigator();
 const PracticeStack = createNativeStackNavigator();
@@ -103,6 +104,13 @@ const AccountStackScreen = () => (
     <AccountStack.Screen
       name="LazyPets"
       component={LazyPets}
+      options={{
+        headerShown: false,
+      }}
+    />
+    <AccountStack.Screen
+      name="Trainers"
+      component={Trainers}
       options={{
         headerShown: false,
       }}
@@ -206,6 +214,7 @@ const App = () => {
                   "PracticeDetail",
                   "ChallengeDetail",
                   "LazyPets",
+                  "Trainers",
                 ];
                 return {
                   display: hideOnScreens.includes(routeName) ? "none" : "flex",
