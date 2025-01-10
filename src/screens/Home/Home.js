@@ -130,7 +130,7 @@ const Home = ({ navigation }) => {
 
       {/* Exercise List Section */}
       <View style={styles.exerciseListContainer}>
-        <Text style={styles.sectionTitle}>Hành Trình Lười Biếng Mất</Text>
+        <Text style={styles.sectionTitle}>Hành Trình Lười Biến Mất</Text>
         <Text style={styles.sectionSubtitle}>
           Khám Phá Thói Quen Vận Động Dễ Dàng
         </Text>
