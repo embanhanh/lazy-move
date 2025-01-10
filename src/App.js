@@ -86,13 +86,6 @@ const HomeStackScreen = () => (
   </HomeStack.Navigator>
 );
 
-// Màn hình cho Settings Stack
-const SettingsScreen = () => (
-  <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-    <Text>Cài đặt</Text>
-  </View>
-);
-
 // Stack Navigator cho Settings
 const AccountStackScreen = () => (
   <AccountStack.Navigator>
@@ -218,10 +211,12 @@ const App = () => {
                 ];
                 return {
                   display: hideOnScreens.includes(routeName) ? "none" : "flex",
-                  height: 60,
+                  height: 70,
                   paddingBottom: 8,
                   paddingTop: 8,
                   backgroundColor: COLORS.primary,
+                  alignItems: "center",
+                  justifyContent: "center",
                 };
               })(),
               tabBarLabelStyle: {

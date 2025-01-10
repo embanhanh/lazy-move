@@ -33,15 +33,11 @@ const PetCard = ({ pet }) => {
     switch (pet.status) {
       case PetStatus.RELEASED:
         return (
-          <Ionicons name="checkmark-circle" size={20} color={COLORS.success} />
+          <Ionicons name="checkmark" size={16} color={COLORS.background} />
         );
       case PetStatus.IN_PROGRESS:
         return (
-          <MaterialCommunityIcons
-            name="progress-check"
-            size={20}
-            color={COLORS.primary}
-          />
+          <Ionicons name="timer-outline" size={16} color={COLORS.primary} />
         );
       case PetStatus.LOCKED:
         return (
@@ -68,7 +64,21 @@ const PetCard = ({ pet }) => {
           >
             {`${pet.id}. ${pet.name}`}
           </Text>
-          <View style={styles.statusBadge}>{getStatusIcon()}</View>
+          <View
+            style={[
+              styles.statusBadge,
+              {
+                backgroundColor:
+                  pet.status === PetStatus.RELEASED
+                    ? COLORS.secondary
+                    : pet.status === PetStatus.IN_PROGRESS
+                    ? `${COLORS.primary}50`
+                    : COLORS.background,
+              },
+            ]}
+          >
+            {getStatusIcon()}
+          </View>
         </View>
         <Text
           style={[
@@ -351,6 +361,11 @@ const styles = StyleSheet.create({
   },
   statusBadge: {
     marginLeft: SIZES.padding.small,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
   },
   pointsText: {
     fontSize: SIZES.text.small,

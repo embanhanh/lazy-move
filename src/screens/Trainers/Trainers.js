@@ -17,11 +17,7 @@ const TrainerCard = ({ trainer, onPress }) => {
       if (trainer.isActive) {
         return (
           <View style={styles.checkIcon}>
-            <Ionicons
-              name="checkmark-circle"
-              size={24}
-              color={COLORS.success}
-            />
+            <Ionicons name="checkmark" size={16} color={COLORS.background} />
           </View>
         );
       }
@@ -288,21 +284,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   checkIcon: {
-    width: 40,
-    height: 40,
+    width: 24,
+    height: 24,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 12,
+    backgroundColor: COLORS.secondary,
   },
   buyButtonText: {
     fontSize: SIZES.text.medium,
-    fontFamily: FONTS.system,
-    fontWeight: "bold",
+    fontFamily: FONTS.bold,
     color: "#333",
   },
   replaceButtonText: {
     fontSize: SIZES.text.medium,
-    fontFamily: FONTS.system,
-    fontWeight: "bold",
+    fontFamily: FONTS.bold,
     color: "#333",
   },
 });
