@@ -13,7 +13,7 @@ import { COLORS, SIZES, TextStyles, FONTS } from "../../constants/theme";
 
 // const { width } = Dimensions.get("window");
 
-const AnimatedCharacter = () => {
+const AnimatedCharacter = ({ handleSpeakClick }) => {
   const bounceAnim = useRef(new Animated.Value(0)).current;
   const floatAnim = useRef(new Animated.Value(0)).current;
   const chatAnim = useRef(new Animated.Value(0)).current;
@@ -172,7 +172,10 @@ const AnimatedCharacter = () => {
           onPress={() => setShowInteractionModal(false)}
         >
           <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.modalOption}>
+            <TouchableOpacity
+              style={styles.modalOption}
+              onPress={() => handleSpeakClick(setShowInteractionModal)}
+            >
               <Ionicons name="mic" size={24} color={COLORS.text.primary} />
               <Text style={styles.modalOptionText}>Nói chuyện</Text>
             </TouchableOpacity>

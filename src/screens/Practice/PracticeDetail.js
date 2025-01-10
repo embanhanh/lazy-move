@@ -8,13 +8,18 @@ import {
   StyleSheet,
   SafeAreaView,
 } from "react-native";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import {
+  FontAwesome5,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { COLORS, SIZES, TextStyles, FONTS } from "../../constants/theme";
 import { CommonActions } from "@react-navigation/native";
 
 const PracticeDetail = ({ route, navigation }) => {
-  const { previousScreen, ...otherParams } = route.params;
-  const { title, duration, points, image, description } = otherParams;
+  const { previousScreen, type = "exercise", ...otherParams } = route.params;
+  const { title, duration, points, image, description, ingredients, steps } =
+    otherParams;
   const [isDescriptionExpanded, setIsDescriptionExpanded] =
     React.useState(false);
   const [textHeight, setTextHeight] = React.useState(0);
@@ -82,7 +87,12 @@ const PracticeDetail = ({ route, navigation }) => {
         </View>
 
         {/* Info Card */}
-        <View style={styles.infoCard}>
+        <View
+          style={[
+            styles.infoCard,
+            { minHeight: type === "exercise" ? 250 : "65%" },
+          ]}
+        >
           <View style={styles.infoHeader}>
             <View style={styles.infoRow}>
               <Ionicons
@@ -93,7 +103,19 @@ const PracticeDetail = ({ route, navigation }) => {
               <Text style={styles.infoText}>{duration}</Text>
             </View>
             <View style={styles.infoRow}>
-              <FontAwesome5 name="running" size={20} color={COLORS.secondary} />
+              {type === "exercise" ? (
+                <FontAwesome5
+                  name="running"
+                  size={20}
+                  color={COLORS.secondary}
+                />
+              ) : (
+                <MaterialCommunityIcons
+                  name="fire"
+                  size={20}
+                  color={COLORS.secondary}
+                />
+              )}
               <Text style={styles.infoText}>{points}</Text>
             </View>
           </View>
@@ -104,46 +126,77 @@ const PracticeDetail = ({ route, navigation }) => {
             style={styles.descriptionContainer}
             onLayout={onContainerLayout}
           >
-            <Text style={styles.descriptionTitle}>Mô tả bài tập</Text>
-            <ScrollView style={styles.descriptionScrollView}>
-              <Text
-                style={[
-                  styles.description,
-                  !isDescriptionExpanded && styles.descriptionCollapsed,
-                ]}
-                numberOfLines={isDescriptionExpanded ? undefined : 4}
-                onTextLayout={onTextLayout}
-              >
-                {description}
-              </Text>
-              {shouldShowMoreButton && (
-                <TouchableOpacity
-                  style={styles.expandButton}
-                  onPress={() =>
-                    setIsDescriptionExpanded(!isDescriptionExpanded)
-                  }
-                >
-                  <Text style={styles.expandButtonText}>
-                    {isDescriptionExpanded ? "Thu gọn" : "Xem thêm"}
+            {type === "exercise" ? (
+              <>
+                <Text style={styles.descriptionTitle}>Mô tả bài tập</Text>
+                <ScrollView style={styles.descriptionScrollView}>
+                  <Text
+                    style={[
+                      styles.description,
+                      !isDescriptionExpanded && styles.descriptionCollapsed,
+                    ]}
+                    numberOfLines={isDescriptionExpanded ? undefined : 4}
+                    onTextLayout={onTextLayout}
+                  >
+                    {description}
                   </Text>
-                </TouchableOpacity>
-              )}
-            </ScrollView>
+                  {shouldShowMoreButton && (
+                    <TouchableOpacity
+                      style={styles.expandButton}
+                      onPress={() =>
+                        setIsDescriptionExpanded(!isDescriptionExpanded)
+                      }
+                    >
+                      <Text style={styles.expandButtonText}>
+                        {isDescriptionExpanded ? "Thu gọn" : "Xem thêm"}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </ScrollView>
+              </>
+            ) : (
+              <ScrollView style={styles.foodScrollView}>
+                <View style={styles.foodSection}>
+                  <Text style={styles.sectionTitle}>Nguyên liệu</Text>
+                  {ingredients?.map((ingredient, index) => (
+                    <Text key={index} style={styles.ingredientText}>
+                      • {ingredient}
+                    </Text>
+                  ))}
+                </View>
+
+                <View style={styles.foodSection}>
+                  <Text style={styles.sectionTitle}>Cách làm</Text>
+                  {steps?.map((step, index) => (
+                    <View key={index} style={styles.stepItem}>
+                      <Text style={styles.stepText}>
+                        <Text style={styles.stepNumber}>
+                          Bước {index + 1}:{" "}
+                        </Text>
+                        {step}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
+              </ScrollView>
+            )}
           </View>
         </View>
       </ScrollView>
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.startButton}>
-          <Text style={styles.startButtonText}>Bắt Đầu Tập</Text>
-        </TouchableOpacity>
+      {type === "exercise" && (
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity style={styles.startButton}>
+            <Text style={styles.startButtonText}>Bắt Đầu Tập</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.magicButton}>
-          <View style={styles.magicButtonContent}>
-            <Ionicons name="sparkles" size={24} color={COLORS.text.primary} />
-            <Text style={styles.magicButtonText}>Làm giúp tôi</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity style={styles.magicButton}>
+            <View style={styles.magicButtonContent}>
+              <Ionicons name="sparkles" size={24} color={COLORS.text.primary} />
+              <Text style={styles.magicButtonText}>Làm giúp tôi</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -229,7 +282,6 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     flex: 1,
-    minHeight: 250,
   },
   infoHeader: {
     flexDirection: "row",
@@ -330,6 +382,40 @@ const styles = StyleSheet.create({
   descriptionScrollView: {
     flex: 1,
     maxHeight: 150,
+  },
+  foodScrollView: {
+    flex: 1,
+    maxHeight: 300,
+  },
+  foodSection: {
+    marginBottom: SIZES.padding.medium,
+  },
+  sectionTitle: {
+    fontSize: SIZES.text.large,
+    fontFamily: FONTS.system,
+    fontWeight: "bold",
+    color: COLORS.secondary,
+    marginBottom: SIZES.padding.small,
+  },
+  ingredientText: {
+    fontSize: SIZES.text.medium,
+    fontFamily: FONTS.regular,
+    color: COLORS.text.primary,
+    marginBottom: SIZES.padding.small,
+    paddingLeft: SIZES.padding.small,
+  },
+  stepItem: {
+    marginBottom: SIZES.padding.small,
+    paddingLeft: SIZES.padding.small,
+  },
+  stepNumber: {
+    fontFamily: FONTS.bold,
+  },
+  stepText: {
+    fontSize: SIZES.text.medium,
+    fontFamily: FONTS.regular,
+    color: COLORS.text.primary,
+    lineHeight: 24,
   },
 });
 
