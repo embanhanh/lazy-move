@@ -8,7 +8,7 @@ import {
   StyleSheet,
   SafeAreaView,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { COLORS, SIZES, TextStyles, FONTS } from "../../constants/theme";
 import { CommonActions } from "@react-navigation/native";
 
@@ -93,7 +93,7 @@ const PracticeDetail = ({ route, navigation }) => {
               <Text style={styles.infoText}>{duration}</Text>
             </View>
             <View style={styles.infoRow}>
-              <Ionicons name="star" size={20} color={COLORS.secondary} />
+              <FontAwesome5 name="running" size={20} color={COLORS.secondary} />
               <Text style={styles.infoText}>{points}</Text>
             </View>
           </View>

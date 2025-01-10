@@ -10,7 +10,7 @@ import {
   TextInput,
 } from "react-native";
 import { COLORS, SIZES, TextStyles, FONTS } from "../../constants/theme";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Social = ({ navigation }) => {
@@ -166,7 +166,11 @@ const Social = ({ navigation }) => {
                 <View style={styles.challengeHeader}>
                   <Text style={styles.challengeTitle}>{challenge.title}</Text>
                   <View style={styles.rewardBadge}>
-                    <Ionicons name="star" size={16} color={COLORS.secondary} />
+                    <FontAwesome5
+                      name="running"
+                      size={16}
+                      color={COLORS.secondary}
+                    />
                     <Text style={styles.rewardText}>{challenge.reward} LP</Text>
                   </View>
                 </View>
@@ -249,8 +253,8 @@ const Social = ({ navigation }) => {
                       <Text style={styles.statText}>{friend.streak} ngày</Text>
                     </View>
                     <View style={styles.statItem}>
-                      <Ionicons
-                        name="star"
+                      <FontAwesome5
+                        name="running"
                         size={16}
                         color={COLORS.secondary}
                       />
@@ -453,7 +457,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   challengeScroll: {
-    padding: SIZES.padding.small,
+    paddingVertical: SIZES.padding.small,
   },
   modalOverlay: {
     flex: 1,

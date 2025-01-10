@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { COLORS, SIZES, TextStyles } from "../../constants/theme";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import StreakFire from "../../components/StreakFire/StreakFire";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -195,8 +195,8 @@ const History = () => {
                       <Text style={styles.detailText}>{exercise.duration}</Text>
                     </View>
                     <View style={styles.activityDetail}>
-                      <Ionicons
-                        name="star"
+                      <FontAwesome5
+                        name="running"
                         size={16}
                         color={COLORS.secondary}
                       />

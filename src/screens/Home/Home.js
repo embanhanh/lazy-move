@@ -8,9 +8,11 @@ import {
   StyleSheet,
   Animated,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import exercise1 from "../../../assets/imgs/exercise1.png";
+import exercise2 from "../../../assets/imgs/exercise2.png";
+import exercise3 from "../../../assets/imgs/exercise3.png";
 import { styles } from "./styles";
 import { COLORS } from "../../constants/theme";
 import AnimatedCharacter from "../../components/AnimatedCharacter/AnimatedCharacter";
@@ -27,7 +29,7 @@ const Home = ({ navigation }) => {
       title: "Xoay Vai Thư Giãn",
       duration: "2 Phút",
       points: "200 Lazy Points",
-      image: exercise1,
+      image: exercise3,
       isFavorite: true,
       description:
         "Bài tập giúp thư giãn vai và cổ, giảm căng thẳng. Thực hiện đều đặn mỗi ngày sẽ giúp giảm đau mỏi vai gáy, tăng cường tuần hoàn máu và giảm stress hiệu quả. Bài tập này đặc biệt phù hợp cho người làm việc văn phòng, thường xuyên ngồi một chỗ trong thời gian dài.",
@@ -46,7 +48,7 @@ const Home = ({ navigation }) => {
       title: "Gập Người",
       duration: "2 Phút",
       points: "300 Lazy Points",
-      image: exercise1,
+      image: exercise2,
       isFavorite: true,
       description: "Bài tập giúp thư giãn vai và cổ, giảm căng thẳng",
     },
@@ -55,7 +57,7 @@ const Home = ({ navigation }) => {
       title: "Vươn Vai",
       duration: "2 Phút",
       points: "300 Lazy Points",
-      image: exercise1,
+      image: exercise3,
       isFavorite: true,
       description: "Bài tập giúp thư giãn vai và cổ, giảm căng thẳng",
     },
@@ -151,7 +153,7 @@ const Home = ({ navigation }) => {
                     </Text>
                   </View>
                   <View style={styles.detailRow}>
-                    <Ionicons name="star" size={16} color="#888" />
+                    <FontAwesome5 name="running" size={16} color="#888" />
                     <Text style={styles.exercisePoints}>{exercise.points}</Text>
                   </View>
                 </View>

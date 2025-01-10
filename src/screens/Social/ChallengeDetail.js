@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { COLORS, SIZES, TextStyles, FONTS } from "../../constants/theme";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const ChallengeDetail = ({ route, navigation }) => {
@@ -84,7 +84,7 @@ const ChallengeDetail = ({ route, navigation }) => {
           <View style={styles.challengeHeader}>
             <Text style={styles.title}>{challenge.title}</Text>
             <View style={styles.rewardBadge}>
-              <Ionicons name="star" size={16} color={COLORS.secondary} />
+              <FontAwesome5 name="running" size={16} color={COLORS.secondary} />
               <Text style={styles.rewardText}>{challenge.reward} LP</Text>
             </View>
           </View>

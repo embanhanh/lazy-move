@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { COLORS, SIZES, TextStyles } from "../../constants/theme";
 import exercise1 from "../../../assets/imgs/exercise1.png";
 import { useNavigation } from "@react-navigation/native";
@@ -159,7 +159,7 @@ const LazyReminder = ({ onClose }) => {
             </Text>
           </View>
           <View style={styles.rewardContainer}>
-            <Ionicons name="star" size={20} color={COLORS.secondary} />
+            <FontAwesome5 name="running" size={20} color={COLORS.secondary} />
             <Text style={styles.rewardText}>
               Hoàn thành ngay + {currentReminder.points}
             </Text>
